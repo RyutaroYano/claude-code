@@ -116,7 +116,7 @@
 - 登録者数は「現在の値」です。公開した時点の登録者数ではないため、初期の動画ほど判定が厳しくなります。
 - 長尺とショートは別々に集計しています（ノアは長尺だけ、ショート主体のチャンネルはショートだけ）。
 - YouTube に直接アクセスできない環境だったため、すべて vidIQ 経由のデータです。vidIQ のクレジットはほぼ使い切りました（残り10）。
-- データは `data.py`、集計は `analyze.py`（`python3 analyze.py` で表を再生成できます）。
+- データは `scripts/data.py`、集計は `scripts/analyze.py` です。`python3 scripts/analyze.py` を実行すると、表が `output/hane_ratio_table.md` に再生成されます。
 
 ---
 
