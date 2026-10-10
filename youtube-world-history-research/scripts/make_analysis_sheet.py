@@ -1,9 +1,13 @@
-"""はねた動画の分析シート（記入用の空欄つき）を xlsx と csv で出力する。
+"""はねた動画の分析シートを xlsx と csv で出力する。
+
+引数なし: 4項目が空欄の記入用シート
+--filled: analysis_filled.py の考察で4項目を埋めたシート
 
 動画タイトルは vidIQ で取得した値（2026-10-08〜09時点）。
 """
 import csv
 import os
+import sys
 
 from openpyxl import Workbook
 from openpyxl.styles import Alignment, Font, PatternFill
@@ -57,19 +61,26 @@ HEADERS = [
 WIDTHS = [22, 40, 60, 44, 30, 30, 30, 36]
 
 
-def rows():
+def rows(analysis=None):
     for ch, vid, title in VIDEOS:
-        yield [ch, CHANNELS[ch], title, f"https://www.youtube.com/watch?v={vid}", "", "", "", ""]
+        filled = list(analysis[vid]) if analysis else ["", "", "", ""]
+        yield [ch, CHANNELS[ch], title, f"https://www.youtube.com/watch?v={vid}", *filled]
 
 
 def main():
+    filled = "--filled" in sys.argv
+    analysis = None
+    name = "video_analysis_sheet"
+    if filled:
+        from analysis_filled import ANALYSIS as analysis
+        name = "video_analysis_sheet_filled"
     out_dir = os.path.join(os.path.dirname(__file__), "..", "output")
 
     wb = Workbook()
     ws = wb.active
     ws.title = "動画分析"
     ws.append(HEADERS)
-    for r in rows():
+    for r in rows(analysis):
         ws.append(r)
 
     header_fill = PatternFill("solid", fgColor="D9E2F3")
@@ -89,12 +100,12 @@ def main():
     for i, w in enumerate(WIDTHS, 1):
         ws.column_dimensions[get_column_letter(i)].width = w
     ws.freeze_panes = "E2"
-    wb.save(os.path.join(out_dir, "video_analysis_sheet.xlsx"))
+    wb.save(os.path.join(out_dir, f"{name}.xlsx"))
 
-    with open(os.path.join(out_dir, "video_analysis_sheet.csv"), "w", encoding="utf-8", newline="") as f:
+    with open(os.path.join(out_dir, f"{name}.csv"), "w", encoding="utf-8", newline="") as f:
         w = csv.writer(f)
         w.writerow(HEADERS)
-        w.writerows(rows())
+        w.writerows(rows(analysis))
 
 
 if __name__ == "__main__":

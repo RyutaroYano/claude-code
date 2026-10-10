@@ -19,5 +19,5 @@ Claude Code を使っていろいろな作業をするための、作業用リ�
 
 | ディレクトリ / ファイル | 内容 |
 |---|---|
-| [`youtube-world-history-research/`](youtube-world-history-research/) | 世界史ジャンルのYouTubeチャンネル調査。「はねた動画」（再生数が登録者数を上回った動画）の割合の比較と、モデル動画の分析シート |
+| [`youtube-world-history-research/`](youtube-world-history-research/) | 世界史ジャンルのYouTubeチャンネル調査。「はねた動画」（再生数が登録者数を上回った動画）の割合の比較と、モデル動画の分析シート（記入用と、Claudeの考察を埋めた版） |
 | [`prompt-fundamentals.md`](prompt-fundamentals.md) | プロンプトの基本についての記事 |
