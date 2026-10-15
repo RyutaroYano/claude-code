@@ -3,7 +3,7 @@
 引数なし: 4項目が空欄の記入用シート
 --filled: analysis_filled.py の考察で4項目を埋めたシート
 
-動画タイトルは vidIQ で取得した値（2026-10-08〜09時点）。
+動画タイトルは vidIQ で取得した値（2026-10-08〜09時点）。再生数・登録者数は stats.py を参照。
 """
 import csv
 import os
@@ -12,6 +12,9 @@ import sys
 from openpyxl import Workbook
 from openpyxl.styles import Alignment, Font, PatternFill
 from openpyxl.utils import get_column_letter
+
+sys.path.insert(0, os.path.dirname(__file__))
+from stats import SUBSCRIBERS, VIEWS  # noqa: E402
 
 CHANNELS = {
     "世界史裏探訪": "https://www.youtube.com/@sekaishi_ura",
@@ -54,17 +57,20 @@ VIDEOS = [
 ]
 
 HEADERS = [
-    "チャンネル名", "チャンネルURL", "動画タイトル", "動画URL",
+    "チャンネル名", "チャンネルURL", "登録者数", "動画タイトル", "動画URL",
+    "再生数", "再生数÷登録者数",
     "誰に向けた動画か", "見たら何が得られると約束しているか",
     "どんな感情を動かしているか（驚き・不安・好奇心など）", "サムネの構図・文字数・色・人物の表情",
 ]
-WIDTHS = [22, 40, 60, 44, 30, 30, 30, 36]
+WIDTHS = [22, 40, 12, 60, 44, 12, 12, 30, 30, 30, 36]
 
 
 def rows(analysis=None):
     for ch, vid, title in VIDEOS:
         filled = list(analysis[vid]) if analysis else ["", "", "", ""]
-        yield [ch, CHANNELS[ch], title, f"https://www.youtube.com/watch?v={vid}", *filled]
+        subs, views = SUBSCRIBERS[ch], VIEWS[vid]
+        yield [ch, CHANNELS[ch], subs, title, f"https://www.youtube.com/watch?v={vid}",
+               views, round(views / subs, 1), *filled]
 
 
 def main():
@@ -92,14 +98,17 @@ def main():
     for row in ws.iter_rows(min_row=2):
         for cell in row:
             cell.alignment = Alignment(wrap_text=True, vertical="top")
-        for cell in row[4:]:
+        for cell in row[7:]:
             cell.fill = input_fill
-        for cell in (row[1], row[3]):
+        for cell in (row[1], row[4]):
             cell.hyperlink = cell.value
             cell.font = Font(color="0563C1", underline="single")
     for i, w in enumerate(WIDTHS, 1):
         ws.column_dimensions[get_column_letter(i)].width = w
-    ws.freeze_panes = "E2"
+    ws.freeze_panes = "H2"
+    for row in ws.iter_rows(min_row=2):
+        row[2].number_format = row[5].number_format = "#,##0"
+        row[6].number_format = "0.0"
     wb.save(os.path.join(out_dir, f"{name}.xlsx"))
 
     with open(os.path.join(out_dir, f"{name}.csv"), "w", encoding="utf-8", newline="") as f:
