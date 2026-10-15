@@ -78,7 +78,9 @@ def main():
     analysis = None
     name = "video_analysis_sheet"
     if filled:
-        from analysis_filled import ANALYSIS as analysis
+        from analysis_filled import ANALYSIS
+        from thumbnail_notes import THUMBNAIL_NOTES
+        analysis = {vid: (*a[:3], THUMBNAIL_NOTES.get(vid, a[3])) for vid, a in ANALYSIS.items()}
         name = "video_analysis_sheet_filled"
     out_dir = os.path.join(os.path.dirname(__file__), "..", "output")
 
