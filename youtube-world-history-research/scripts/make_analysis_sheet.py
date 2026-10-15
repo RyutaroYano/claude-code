@@ -1,7 +1,7 @@
 """はねた動画の分析シートを xlsx と csv で出力する。
 
 引数なし: 4項目が空欄の記入用シート
---filled: analysis_filled.py の考察で4項目を埋めたシート
+--filled: analysis_filled.py・viewer_analysis.py・thumbnail_notes.py の考察で分析列を埋めたシート
 
 動画タイトルは vidIQ で取得した値（2026-10-08〜09時点）。再生数・登録者数は stats.py を参照。
 """
@@ -59,15 +59,17 @@ VIDEOS = [
 HEADERS = [
     "チャンネル名", "チャンネルURL", "登録者数（10/8〜9時点）", "動画タイトル", "動画URL",
     "再生数（10/15時点）", "再生数÷登録者数",
-    "誰に向けた動画か", "見たら何が得られると約束しているか",
-    "どんな感情を動かしているか（驚き・不安・好奇心など）", "サムネの構図・文字数・色・人物の表情",
+    "誰に向けた動画か", "視聴者は何が欲しいのか",
+    "見たら何が得られると約束しているか（サムネ＋タイトル＋概要欄から視聴者が受け取る約束）",
+    "動画制作者の意図",
+    "どんな感情を動かしているか（驚き・不安・好奇心など）※コメント未反映", "サムネの構図・文字数・色・人物の表情",
 ]
-WIDTHS = [22, 40, 12, 60, 44, 12, 12, 30, 30, 30, 36]
+WIDTHS = [22, 40, 12, 60, 44, 12, 12, 30, 36, 60, 48, 30, 60]
 
 
 def rows(analysis=None):
     for ch, vid, title in VIDEOS:
-        filled = list(analysis[vid]) if analysis else ["", "", "", ""]
+        filled = list(analysis[vid]) if analysis else [""] * (len(HEADERS) - 7)
         subs, views = SUBSCRIBERS[ch], VIEWS[vid]
         yield [ch, CHANNELS[ch], subs, title, f"https://www.youtube.com/watch?v={vid}",
                views, round(views / subs, 1), *filled]
@@ -80,7 +82,11 @@ def main():
     if filled:
         from analysis_filled import ANALYSIS
         from thumbnail_notes import THUMBNAIL_NOTES
-        analysis = {vid: (*a[:3], THUMBNAIL_NOTES.get(vid, a[3])) for vid, a in ANALYSIS.items()}
+        from viewer_analysis import VIEWER
+        analysis = {
+            vid: (who, *VIEWER[vid], emotion, THUMBNAIL_NOTES.get(vid, thumb))
+            for vid, (who, emotion, thumb) in ANALYSIS.items()
+        }
         name = "video_analysis_sheet_filled"
     out_dir = os.path.join(os.path.dirname(__file__), "..", "output")
 
