@@ -29,6 +29,23 @@
 
 ※「歴史裏探訪」は、モデルにしている「世界史裏探訪」とは別のチャンネル。
 
+### 動画のリンク（再生数の多い順）
+
+- まりんぬ「とにかく風呂に入らない王たち」：https://www.youtube.com/watch?v=VXtIiGi1PH4
+- 歴史の森「ヨーロッパ不潔史」：https://www.youtube.com/watch?v=5s7nBiGaY60
+- 歴史雑記ヒストリカ「知られざる（？）ヨーロッパお風呂の歴史」：https://www.youtube.com/watch?v=mk0ML67dSGk
+- 五回目は正直「意外と頑張っていた中世都市の衛生問題」：https://www.youtube.com/watch?v=l7kSDwZSqco
+- ゆっくりモンド2「中世ヨーロッパ君が…フォローしておく動画」：https://www.youtube.com/watch?v=GQygc-IZylY
+- 人類のあゆみ「中世の人はお風呂に入らなかったって本当？｜パリに湯屋26軒」：https://www.youtube.com/watch?v=WIIMUERZpuA
+- 絵画で学ぶ世界史「貴族や平民がお風呂に入らない裏に隠されていた本当の理由とは？」：https://www.youtube.com/watch?v=zed3-Kv0GZo
+- 話のすみっこ「中世ヨーロッパの人は本当にお風呂に入らなかったの？」：https://www.youtube.com/watch?v=a0x8SNneQg4
+- 歴史ラボラトリー「現代人が中世ヨーロッパに行ったら5分で逃げ出す…」：https://www.youtube.com/watch?v=Es-W6nkjO-M
+- 歴史の謎解き人「ヨーロッパ貴族にとって入浴はなぜ問題だったのか?」：https://www.youtube.com/watch?v=0AIhIcfgHcw
+- 歴史裏探訪「実は風呂好きだった？…入浴が消えた歴史的理由」：https://www.youtube.com/watch?v=N6efusEZ2sY
+- 歴史の暮らし探訪「中世ヨーロッパは本当に不潔だったのか。…白いリネンが語る『清潔』の基準」：https://www.youtube.com/watch?v=Oj_vyURbboQ
+- Guadalupe Stewart「中世ヨーロッパの生活と公衆浴場：パリに26軒あった記録」：https://www.youtube.com/watch?v=AnFFgvDrFiI
+- 中世ヨーロッパ研究所「【実はウソ？】中世ヨーロッパの人々は本当にお風呂に入らなかったのか？」：https://www.youtube.com/watch?v=mwxS7VnvvLM
+
 ### 読み取れること
 
 - **一番伸びているのは「不潔側」の動画**（73万再生の「風呂に入らない王たち」）。当たり前を持つ人が多いことの裏付けになる。
