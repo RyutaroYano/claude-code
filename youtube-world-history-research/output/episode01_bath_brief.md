@@ -15,7 +15,7 @@
 | 世界の答え | ヨーロッパの都市には公衆浴場があったが、15世紀末〜16世紀に減っていった |
 | 日本の答え | 日本にも町の風呂屋があり、取り締まりを受けながらも残った |
 | タイトル | 同じ「町の風呂屋」があったのに。ヨーロッパだけ浴場が消えた意外な理由 |
-| サムネ | 上の帯：黒地に黄色で「ヨーロッパ」「日本」。真ん中に赤い縦線。左右に同じ角度・同じ画風の浴場の断面図。左に「浴場」、右に「風呂屋」のラベル。問いの言葉「ヨーロッパにも銭湯？」（黄色）。時代は入れない |
+| サムネ | 第6章を参照。上の帯に「ヨーロッパ」「日本」、左右に同じ角度・同じ画風の風呂屋の断面図、下の中央に問いの言葉「ヨーロッパにも銭湯？」。時代と物の名前のラベルは入れない |
 | 形式 | 教える側と聞く側の2人の問答（名前は未定。台本では「教える側」「聞く側」と書く） |
 | 長さ | 20〜30分 |
 
@@ -101,3 +101,51 @@
 3. 台本（第2章の流れで、教える側と聞く側の問答）。
 4. サムネとタイトルの約束の回収表（「ヨーロッパにも銭湯？」に本編のどこで答えたか、「ヨーロッパだけ浴場が消えた理由」をどこで回収したか）。
 5. 概要欄（出典一覧と章立て）。
+
+---
+
+## 6. サムネの完成イメージと、背景画像のプロンプト
+
+### 完成イメージ（Canvaで載せる文字）
+
+```
+┌──────────────┬──────────────┐
+│   ヨーロッパ      │      日本        │ ← 黒い帯（上から18%）
+├──────────────┼──────────────┤
+│  中世ヨーロッパの   ┃  日本の風呂屋の    │
+│  浴場の断面図     ┃  断面図           │
+│                                   │
+│       ヨーロッパにも銭湯？            │ ← 下の中央
+└──────────────┴──────────────┘
+```
+
+| 置き場所 | 文字 | 色 | フォント | 大きさの目安 |
+|---|---|---|---|---|
+| 上の帯・左半分の中央 | ヨーロッパ | 黄色 | 極太ゴシック体 | 帯の高さの70% |
+| 上の帯・右半分の中央 | 日本 | 黄色 | 極太ゴシック体 | 同上 |
+| 下の中央（下から約25%の範囲） | ヨーロッパにも銭湯？（10文字） | 黄色、黒い縁取り | 極太明朝体（昔の話のため） | 横幅の80%に収まる大きさ |
+
+- 要素は3つ（帯の地域名、問いの言葉、左右の絵）。目を引く色は黄色だけ。
+- 物の名前のラベル（浴場・風呂屋）と時代は入れない。
+- 区切りは、絵の境目をそのまま使う。線を足すなら細い白か赤（文字には赤を使わない）。
+
+### 背景画像のプロンプト（画像生成AIに渡す）
+
+```
+High-impact thumbnail background for a YouTube history video.
+16:9 composition, 1280x720.
+Split-screen composition divided vertically in the exact center.
+Left half: a late-medieval European town bathhouse (around 1500), shown as a cutaway cross-section seen from a high angle: a wood-heated stove, a steam room with wooden benches, and a few wooden bathing tubs, a few people relaxing and talking.
+Right half: a Japanese town public bathhouse, shown from the exact same high-angle cutaway viewpoint, same scale and same art style as the left half: a fire-heated boiler, a steam bath room with a low entrance, a wooden washing area, a few people relaxing.
+Based on historical sources: Albrecht Duerer's woodcut "The Men's Bath" (c. 1496) for the left half, and Edo-period Japanese bathhouse illustrations for the right half. Do not add objects not found in these sources.
+Style: Painterly historical illustration, warm lighting, muted warm colors (brown, amber, cream), thin outlines, gentle steam.
+Keep the top 18% as a plain solid black band, empty.
+Keep the bottom-center 25% area simple and uncluttered for text placement.
+People are small, fully covered by bathing cloths, no nudity.
+No text, no letters, no numbers, no signs, no watermarks.
+Clear focal point on the two bathhouses side by side.
+```
+
+- 日本側の元にする史料は未確定（ファクトシート#18）。上のプロンプトは「江戸の湯屋の絵」を元にする案で書いている。洛中洛外図に風呂屋が確かめられたら、右半分の元の史料を差し替える。
+- 江戸の湯屋を元にすると、ヨーロッパ側と時代が約300年ずれる。サムネでは時代を言わず、本編で「日本の絵は後の時代のもの」と補足する。
+- 5枚作り、左右が同じ角度・同じ画風になっていて、違いが一目で分かる1枚を選ぶ。
