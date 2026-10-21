@@ -1,0 +1,60 @@
+{
+  "title": "サンプル: ヨーロッパと日本の風呂",
+  "fps": 30,
+  "width": 1280,
+  "height": 720,
+  "crossfadeSec": 0.5,
+  "cuts": [
+    {
+      "id": "c01",
+      "durationSec": 10,
+      "image": "episodes/sample/images/cut01.png",
+      "motion": "zoomIn",
+      "narration": "昔のヨーロッパの人は、あまり風呂に入らなかった。そんな話を聞いたことはないでしょうか。",
+      "captions": [
+        { "text": "昔のヨーロッパの人は、\nあまり風呂に入らなかった。", "startSec": 0.3, "endSec": 5.0 },
+        { "text": "そんな話を\n聞いたことはないでしょうか。", "startSec": 5.0, "endSec": 9.3 }
+      ]
+    },
+    {
+      "id": "c02",
+      "durationSec": 10,
+      "image": "episodes/sample/images/cut02.png",
+      "motion": "panRight",
+      "narration": "ところが、時計の針を1500年ごろまで戻すと、町の景色はまるで違います。",
+      "captions": [
+        { "text": "ところが、時計の針を\n1500年ごろまで戻すと、", "startSec": 0.3, "endSec": 5.2 },
+        { "text": "町の景色は\nまるで違います。", "startSec": 5.2, "endSec": 9.3 }
+      ]
+    },
+    {
+      "id": "c03",
+      "durationSec": 10,
+      "image": "episodes/sample/images/cut03.png",
+      "motion": "zoomOut",
+      "narration": "町には、お金を払って入る公衆浴場がありました。今の日本でいう、銭湯です。",
+      "captions": [
+        { "text": "町には、お金を払って入る\n公衆浴場がありました。", "startSec": 0.3, "endSec": 5.6 },
+        { "text": "今の日本でいう、銭湯です。", "startSec": 5.6, "endSec": 9.3 }
+      ]
+    },
+    {
+      "id": "c04",
+      "durationSec": 10,
+      "video": "episodes/sample/video/cut04.mp4",
+      "image": "episodes/sample/images/cut04.png",
+      "motion": "panLeft",
+      "narration": "同じころ、海を隔てた日本の京都にも、町の風呂屋が生まれていました。",
+      "captions": [
+        { "text": "同じころ、海を隔てた\n日本の京都にも、", "startSec": 0.3, "endSec": 4.8 },
+        { "text": "町の風呂屋が\n生まれていました。", "startSec": 4.8, "endSec": 9.3 }
+      ]
+    }
+  ],
+  "audio": [
+    { "src": "episodes/sample/audio/narration01.wav", "startSec": 0.3 },
+    { "src": "episodes/sample/audio/narration02.wav", "startSec": 10.3 },
+    { "src": "episodes/sample/audio/narration03.wav", "startSec": 20.3 },
+    { "src": "episodes/sample/audio/narration04.wav", "startSec": 30.3 }
+  ]
+}

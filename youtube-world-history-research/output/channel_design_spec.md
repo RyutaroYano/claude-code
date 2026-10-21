@@ -563,6 +563,8 @@ AIの確認を最後の確認にする前提だが、公開前に次の2つだ�
   - **Frames to Video**：始まりの画像と終わりの画像を渡し、その間を動かす。ChatGPT で作った画像をそのまま使える。
   - **Ingredients to Video**：参考画像を複数渡し、人物や画風をそろえる。同じ人物が何度も出る回で使う。
 - 使えるプラン・回数は、使う前に Google の公式ページで確かめる。
+- **組み立ての作業フォルダ**：`youtube-world-history-research/video/`（Remotion）。1本ごとに `episodes/〔回〕/episode.json` を作る。中身は、カットごとの秒数・画像か動画のファイル・動かし方（zoomIn／zoomOut／panLeft／panRight）・テロップの文と時間、音声ファイルと開始時間。使い方は同じフォルダの `README.md`。
+- Remotion は、個人のクリエイターなら収益化した YouTube でも無料で使える（v4.0.532 の利用条件。従業員3人までの会社も無料）。
 
 ---
 
