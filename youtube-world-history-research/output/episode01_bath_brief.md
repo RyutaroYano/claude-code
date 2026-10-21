@@ -138,7 +138,7 @@ Split-screen composition divided vertically in the exact center.
 Left half: a late-medieval European town bathhouse (around 1500), shown as a cutaway cross-section seen from a high angle: a wood-heated stove, a steam room with wooden benches, and a few wooden bathing tubs, a few people relaxing and talking.
 Right half: a Japanese town public bathhouse, shown from the exact same high-angle cutaway viewpoint, same scale and same art style as the left half: a fire-heated boiler, a steam bath room with a low entrance, a wooden washing area, a few people relaxing.
 Based on historical sources: Albrecht Duerer's woodcut "The Men's Bath" (c. 1496) for the left half, and Edo-period Japanese bathhouse illustrations for the right half. Do not add objects not found in these sources.
-Style: Painterly historical illustration, warm lighting, muted warm colors (brown, amber, cream), thin outlines, gentle steam.
+Style: cinematic historical reenactment, photorealistic, natural light, muted warm colors (brown, amber, cream), gentle steam.
 Keep the top 18% as a plain solid black band, empty.
 Keep the bottom-center 25% area simple and uncluttered for text placement.
 People are small, fully covered by bathing cloths, no nudity.
