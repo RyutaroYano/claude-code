@@ -168,3 +168,29 @@ Whisper の入力として受け付ける形（どれでもよい）：
 - 出典：`node_modules/remotion/LICENSE.md`（v4.0.532）、https://www.remotion.dev/license 。
   v5.0 で少し条件が変わる予告あり。アップデート時に再確認する。
 - フォント Noto Sans JP は SIL Open Font License（動画への使用は自由）。
+
+
+## カット表から episode.json を作る（scripts/build_episode.py）
+
+```
+python3 scripts/build_episode.py <回のID> <カット表のMarkdown> ...
+# 例
+python3 scripts/build_episode.py ep001 ../youtube_script_system_starter/06_案件進行中/第01回_風呂/0[4-9]_ブロック*.md
+```
+
+入力は `public/episodes/<回のID>/` の下に、次の名前で置く。
+
+| 置く場所 | 中身 | 作る人・道具 |
+|---|---|---|
+| `audio/block01.wav` … | ブロックごとの音声（ナレーション＋台詞）。カット表のファイル順に番号 | Gemini（声の台帳どおり） |
+| `timing/block01.json` … | 上の音声を Whisper にかけた、言葉ごとの時間 | Whisper |
+| `images/cut001.png` … | カット番号と同じ名前の画像。10秒を超えて分けたカットは `cut007a.png` のように枝番 | ChatGPT |
+| `video/cut002.mp4` … | 動画生成したカット（あれば画像より優先） | Google Flow |
+
+出力は `episodes/<回のID>/episode.json` と `build_report.md`（足りない画像の一覧、分けたカット、注意）。
+足りない画像は灰色の仮の画面で埋めるので、素材が全部そろう前でも書き出して流れを確かめられる。
+
+決まり：
+- カットの切れ目はカット表どおり（ナレーションの区切り）。音声から各カットの秒数を出し、10秒を超えるカットはテロップの区切りで分ける。
+- テロップは1行16字まで、2行まで。句点と読点で区切る。文字は台本のものを使う（Whisper の文字は使わない）。
+- カットの中の順番は、ナレーション → 台詞。
