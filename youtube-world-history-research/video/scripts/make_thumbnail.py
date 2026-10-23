@@ -53,15 +53,20 @@ def draw_center(draw, text, font, cx, cy, fill, stroke=0, stroke_fill=None):
               stroke_width=stroke, stroke_fill=stroke_fill)
 
 
-BOX_PAD_X, BOX_PAD_Y, BOX_BORDER = 22, 12, 10
+# 白い枠の決まり（2026-10-23 に人が決めた数値）
+BOX_PAD_X, BOX_PAD_Y = 22, 12  # 枠の大きさを決めるときの、文字のまわりの余白
+BOX_BORDER = 10                # 黒い縁の太さ
+BOX_RADIUS = 28                # 角の丸み
+BOX_TEXT_SCALE = 0.8           # 枠の大きさはそのまま、中の文字をこの割合に小さくする
 
 
 def draw_box(draw, text, font, cx, cy):
     x0, y0, x1, y1 = draw.textbbox((0, 0), text, font=font)
     w, h = x1 - x0 + BOX_PAD_X * 2, y1 - y0 + BOX_PAD_Y * 2
-    draw.rounded_rectangle((cx - w / 2, cy - h / 2, cx + w / 2, cy + h / 2), radius=14,
+    draw.rounded_rectangle((cx - w / 2, cy - h / 2, cx + w / 2, cy + h / 2), radius=BOX_RADIUS,
                            fill=(255, 255, 255), outline=(0, 0, 0), width=BOX_BORDER)
-    draw_center(draw, text, font, cx, cy, RED)
+    small = ImageFont.truetype(font.path, round(font.size * BOX_TEXT_SCALE))
+    draw_center(draw, text, small, cx, cy, RED)
 
 
 def main(bg, left, right, question, out, box=False):
@@ -82,7 +87,7 @@ def main(bg, left, right, question, out, box=False):
         side_font = fit_font(SERIF, max(q_left, q_right, key=len), W / 2 * 0.8, H * 0.17)
         draw_box(draw, q_left, side_font, W / 4, H * 0.86)
         draw_box(draw, q_right, side_font, W * 3 / 4, H * 0.86)
-        mid_font = fit_font(SERIF, q_mid, W * 0.32, H * 0.12)
+        mid_font = fit_font(SERIF, q_mid, W * 0.56, H * 0.12)
         draw_box(draw, q_mid, mid_font, W / 2, H * 0.66)
     elif box:
         q_font = fit_font(SERIF, question, W * 0.72, H * 0.16)
