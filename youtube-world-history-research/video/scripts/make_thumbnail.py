@@ -54,18 +54,20 @@ def draw_center(draw, text, font, cx, cy, fill, stroke=0, stroke_fill=None):
 
 
 # 白い枠の決まり（2026-10-23 に人が決めた数値）
-BOX_PAD_X, BOX_PAD_Y = 22, 12  # 枠の大きさを決めるときの、文字のまわりの余白
+BOX_PAD_Y = 12                 # 枠の高さ：元の大きさの文字の上下にとる余白
+BOX_PAD_X = 36                 # 枠の横幅：小さくした文字の左右にとる余白
 BOX_BORDER = 10                # 黒い縁の太さ
 BOX_RADIUS = 28                # 角の丸み
 BOX_TEXT_SCALE = 0.8           # 枠の大きさはそのまま、中の文字をこの割合に小さくする
 
 
 def draw_box(draw, text, font, cx, cy):
-    x0, y0, x1, y1 = draw.textbbox((0, 0), text, font=font)
-    w, h = x1 - x0 + BOX_PAD_X * 2, y1 - y0 + BOX_PAD_Y * 2
+    _, y0, _, y1 = draw.textbbox((0, 0), text, font=font)
+    small = ImageFont.truetype(font.path, round(font.size * BOX_TEXT_SCALE))
+    sx0, _, sx1, _ = draw.textbbox((0, 0), text, font=small)
+    w, h = sx1 - sx0 + BOX_PAD_X * 2, y1 - y0 + BOX_PAD_Y * 2
     draw.rounded_rectangle((cx - w / 2, cy - h / 2, cx + w / 2, cy + h / 2), radius=BOX_RADIUS,
                            fill=(255, 255, 255), outline=(0, 0, 0), width=BOX_BORDER)
-    small = ImageFont.truetype(font.path, round(font.size * BOX_TEXT_SCALE))
     draw_center(draw, text, small, cx, cy, RED)
 
 
