@@ -5,9 +5,10 @@ Usage:
   例: python3 scripts/make_thumbnail.py bg.webp ロンドン 江戸 同じ大火なのに？ out/thumb.png
 
 - 1280x720 に切り抜く（足りない向きは中央で切る）。
-- 上18%を黒い帯で塗り、左右の中央に地域名（黄色・極太ゴシック）。
+- 上18%を黒い帯で塗り、左右の中央に地域名（黄色・極太明朝）。
+- 真ん中に赤い縦線（帯の下から画像の下まで）。
 - 下の中央に問いの言葉（黄色・黒い縁取り・極太明朝。横幅の80%に収める）。
-- フォントは public/fonts/ の Noto Sans JP Black と Noto Serif JP Black（scripts/fetch_font.sh）。
+- フォントは public/fonts/ の Noto Serif JP Black（scripts/fetch_font.sh）。
 """
 import os
 import sys
@@ -17,8 +18,9 @@ from PIL import Image, ImageDraw, ImageFont
 W, H = 1280, 720
 BAND = 0.18
 YELLOW = (255, 214, 0)
+RED = (225, 0, 20)
+LINE_W = 10
 ROOT = os.path.join(os.path.dirname(__file__), "..")
-SANS = os.path.join(ROOT, "public/fonts/NotoSansJP-Black.ttf")
 SERIF = os.path.join(ROOT, "public/fonts/NotoSerifJP-Black.ttf")
 
 
@@ -52,8 +54,9 @@ def main(bg, left, right, question, out):
     draw = ImageDraw.Draw(img)
     band_h = round(H * BAND)
     draw.rectangle((0, 0, W, band_h), fill=(0, 0, 0))
+    draw.rectangle((W / 2 - LINE_W / 2, band_h, W / 2 + LINE_W / 2, H), fill=RED)
 
-    label_font = fit_font(SANS, max(left, right, key=len), W / 2 * 0.8, band_h * 0.7)
+    label_font = fit_font(SERIF, max(left, right, key=len), W / 2 * 0.8, band_h * 0.7)
     draw_center(draw, left, label_font, W / 4, band_h / 2, YELLOW)
     draw_center(draw, right, label_font, W * 3 / 4, band_h / 2, YELLOW)
 
