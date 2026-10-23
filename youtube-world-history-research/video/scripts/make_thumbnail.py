@@ -3,10 +3,13 @@
 Usage:
   python3 scripts/make_thumbnail.py <背景画像> <左の地域名> <右の地域名> <問いの言葉> <出力.png>
   例: python3 scripts/make_thumbnail.py bg.webp ロンドン 江戸 同じ大火なのに？ out/thumb.png
+  左右に分ける形: 問いの言葉を「左|真ん中|右」と書く
+  例: python3 scripts/make_thumbnail.py bg.webp ロンドン 日本 "石造り？|なんで|木造り？" out/thumb.png
+      → 真ん中の上に「なんで」、その下の左に「石造り？」、右に「木造り？」
 
 - 1280x720 に切り抜く（足りない向きは中央で切る）。
 - 上18%を黒い帯で塗り、左右の中央に地域名（黄色・極太明朝）。
-- 真ん中に赤い縦線（帯の下から画像の下まで）。
+- 真ん中に赤い縦線（上の帯から画像の下まで通す）。
 - 下の中央に問いの言葉（黄色・黒い縁取り・極太明朝。横幅の80%に収める）。
 - フォントは public/fonts/ の Noto Serif JP Black（scripts/fetch_font.sh）。
 """
@@ -54,15 +57,24 @@ def main(bg, left, right, question, out):
     draw = ImageDraw.Draw(img)
     band_h = round(H * BAND)
     draw.rectangle((0, 0, W, band_h), fill=(0, 0, 0))
-    draw.rectangle((W / 2 - LINE_W / 2, band_h, W / 2 + LINE_W / 2, H), fill=RED)
+    draw.rectangle((W / 2 - LINE_W / 2, 0, W / 2 + LINE_W / 2, H), fill=RED)
 
     label_font = fit_font(SERIF, max(left, right, key=len), W / 2 * 0.8, band_h * 0.7)
     draw_center(draw, left, label_font, W / 4, band_h / 2, YELLOW)
     draw_center(draw, right, label_font, W * 3 / 4, band_h / 2, YELLOW)
 
     stroke = 10
-    q_font = fit_font(SERIF, question, W * 0.8, H * 0.2, stroke)
-    draw_center(draw, question, q_font, W / 2, H * 0.86, YELLOW, stroke, (0, 0, 0))
+    parts = question.split("|")
+    if len(parts) == 3:
+        q_left, q_mid, q_right = parts
+        side_font = fit_font(SERIF, max(q_left, q_right, key=len), W / 2 * 0.86, H * 0.17, stroke)
+        draw_center(draw, q_left, side_font, W / 4, H * 0.87, YELLOW, stroke, (0, 0, 0))
+        draw_center(draw, q_right, side_font, W * 3 / 4, H * 0.87, YELLOW, stroke, (0, 0, 0))
+        mid_font = fit_font(SERIF, q_mid, W * 0.4, H * 0.15, stroke)
+        draw_center(draw, q_mid, mid_font, W / 2, H * 0.68, YELLOW, stroke, (0, 0, 0))
+    else:
+        q_font = fit_font(SERIF, question, W * 0.8, H * 0.2, stroke)
+        draw_center(draw, question, q_font, W / 2, H * 0.86, YELLOW, stroke, (0, 0, 0))
 
     os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
     img.save(out)
