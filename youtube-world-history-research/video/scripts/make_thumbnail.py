@@ -6,6 +6,7 @@ Usage:
   左右に分ける形: 問いの言葉を「左|真ん中|右」と書く
   例: python3 scripts/make_thumbnail.py bg.webp ロンドン 日本 "石造り？|なんで|木造り？" out/thumb.png
       → 真ん中の上に「なんで」、その下の左に「石造り？」、右に「木造り？」
+  文字を白い枠に入れる形（白地・黒い縁・赤い文字）: 最後に --box をつける
 
 - 1280x720 に切り抜く（足りない向きは中央で切る）。
 - 上18%を黒い帯で塗り、左右の中央に地域名（黄色・極太明朝）。
@@ -52,7 +53,18 @@ def draw_center(draw, text, font, cx, cy, fill, stroke=0, stroke_fill=None):
               stroke_width=stroke, stroke_fill=stroke_fill)
 
 
-def main(bg, left, right, question, out):
+BOX_PAD_X, BOX_PAD_Y, BOX_BORDER = 22, 12, 10
+
+
+def draw_box(draw, text, font, cx, cy):
+    x0, y0, x1, y1 = draw.textbbox((0, 0), text, font=font)
+    w, h = x1 - x0 + BOX_PAD_X * 2, y1 - y0 + BOX_PAD_Y * 2
+    draw.rounded_rectangle((cx - w / 2, cy - h / 2, cx + w / 2, cy + h / 2), radius=14,
+                           fill=(255, 255, 255), outline=(0, 0, 0), width=BOX_BORDER)
+    draw_center(draw, text, font, cx, cy, RED)
+
+
+def main(bg, left, right, question, out, box=False):
     img = cover(Image.open(bg).convert("RGB"))
     draw = ImageDraw.Draw(img)
     band_h = round(H * BAND)
@@ -65,7 +77,17 @@ def main(bg, left, right, question, out):
 
     stroke = 10
     parts = question.split("|")
-    if len(parts) == 3:
+    if box and len(parts) == 3:
+        q_left, q_mid, q_right = parts
+        side_font = fit_font(SERIF, max(q_left, q_right, key=len), W / 2 * 0.8, H * 0.17)
+        draw_box(draw, q_left, side_font, W / 4, H * 0.86)
+        draw_box(draw, q_right, side_font, W * 3 / 4, H * 0.86)
+        mid_font = fit_font(SERIF, q_mid, W * 0.32, H * 0.12)
+        draw_box(draw, q_mid, mid_font, W / 2, H * 0.66)
+    elif box:
+        q_font = fit_font(SERIF, question, W * 0.72, H * 0.16)
+        draw_box(draw, question, q_font, W / 2, H * 0.85)
+    elif len(parts) == 3:
         q_left, q_mid, q_right = parts
         side_font = fit_font(SERIF, max(q_left, q_right, key=len), W / 2 * 0.86, H * 0.17, stroke)
         draw_center(draw, q_left, side_font, W / 4, H * 0.87, YELLOW, stroke, (0, 0, 0))
@@ -82,6 +104,7 @@ def main(bg, left, right, question, out):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 6:
+    args = [a for a in sys.argv[1:] if a != "--box"]
+    if len(args) != 5:
         sys.exit(__doc__)
-    main(*sys.argv[1:])
+    main(*args, box="--box" in sys.argv)
