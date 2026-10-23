@@ -86,7 +86,7 @@ def main():
         from viewer_analysis import VIEWER
         analysis = {vid: (*VIEWER[vid], EMOTIONS[vid], THUMBNAIL_NOTES[vid]) for _, vid, _ in VIDEOS}
         name = "video_analysis_sheet_filled"
-    out_dir = os.path.join(os.path.dirname(__file__), "..", "output")
+    out_dir = os.path.join(os.path.dirname(__file__), "..", "02_リサーチ", "チャンネル分析")
 
     wb = Workbook()
     ws = wb.active

@@ -2,7 +2,7 @@
 
 APIキーは環境のネットワークシークレット（www.googleapis.com に X-Goog-Api-Key ヘッダー）で付くため、
 このスクリプトはキーを持たない。
-各動画の上位コメント（relevance 順）を最大 MAX_PAGES×100 件、output/comments_raw/<動画ID>.json に保存する。
+各動画の上位コメント（relevance 順）を最大 MAX_PAGES×100 件、02_リサーチ/コメント生データ/<動画ID>.json に保存する。
 コメントは他人の投稿なので、生データは git に入れない（.gitignore 済み）。
 """
 import json
@@ -16,7 +16,7 @@ from make_analysis_sheet import VIDEOS  # noqa: E402
 
 API = "https://www.googleapis.com/youtube/v3/"
 MAX_PAGES = 2
-OUT = os.path.join(os.path.dirname(__file__), "..", "output", "comments_raw")
+OUT = os.path.join(os.path.dirname(__file__), "..", "02_リサーチ", "コメント生データ")
 
 
 def get(endpoint, **params):

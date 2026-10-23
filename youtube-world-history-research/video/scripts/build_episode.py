@@ -3,7 +3,7 @@
 
 使い方:
   python3 scripts/build_episode.py <回のID> <カット表のMarkdown> [<カット表のMarkdown> ...]
-  例: python3 scripts/build_episode.py ep001 ../youtube_script_system_starter/06_案件進行中/第01回_風呂/0[4-9]_ブロック*.md
+  例: python3 scripts/build_episode.py ep001 ../05_各回/第01回_風呂/0[4-9]_ブロック*.md
 
 入力（public/episodes/<回のID>/ の下に置く）:
   audio/block01.wav  … ブロックごとの音声（ナレーション＋台詞）。カット表のファイル順に block01, block02, …

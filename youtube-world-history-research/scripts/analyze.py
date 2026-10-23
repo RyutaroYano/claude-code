@@ -18,7 +18,7 @@ lines.append("|---|---|---|---|---|---|---|---|---|---|---|")
 for i, r in enumerate(rows, 1):
     lines.append(f"| {i} | {r['name']} | {r['group']} | {r['created']} | {r['subs']:,} | {r['fmt']} | {r['n']} | {r['hane']} | {r['rate']:.0%} | {r['med_ratio']:.2f} | {r['top_ratio']:.1f} |")
 
-out = os.path.join(os.path.dirname(__file__), "..", "output", "hane_ratio_table.md")
+out = os.path.join(os.path.dirname(__file__), "..", "02_リサーチ", "チャンネル分析", "hane_ratio_table.md")
 with open(out, "w", encoding="utf-8") as f:
     f.write("\n".join(lines) + "\n")
 print("\n".join(lines))

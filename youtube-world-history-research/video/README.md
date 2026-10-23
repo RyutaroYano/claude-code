@@ -175,7 +175,7 @@ Whisper の入力として受け付ける形（どれでもよい）：
 ```
 python3 scripts/build_episode.py <回のID> <カット表のMarkdown> ...
 # 例
-python3 scripts/build_episode.py ep001 ../youtube_script_system_starter/06_案件進行中/第01回_風呂/0[4-9]_ブロック*.md
+python3 scripts/build_episode.py ep001 ../05_各回/第01回_風呂/0[4-9]_ブロック*.md
 ```
 
 入力は `public/episodes/<回のID>/` の下に、次の名前で置く。
