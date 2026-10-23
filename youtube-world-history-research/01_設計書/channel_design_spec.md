@@ -637,7 +637,7 @@ Style: cinematic historical reenactment, photorealistic, natural light, muted wa
 |---|---|
 | チャンネル名・切り口・説明文 | 確定（第1章、channel_concept.md ステップ6・7） |
 | 形式 | 確定：ナレーター1人（名前なし、ドキュメンタリーの語り）＋AI再現VTR |
-| 1本目 | 確定：風呂（`05_各回/第01回_風呂`） |
+| 1本目 | 確定：大火（`05_各回/第01回_大火`）。2本目は風呂（`05_各回/第02回_風呂`）。2026-10-23 に入れ替え |
 | 画像の画風 | 仮確定：写実的な再現映像（第15章の絵の台帳）。最初の1本で基準の画像を決める |
 | 道具 | 確定：台本 Claude Code／声 Gemini／画像 ChatGPT／動画 Google Flow／組み立て Remotion |
 | ナレーターの声の名前とモデル | 未定：Gemini の APIキーを登録してから、候補4つを試して決める |
