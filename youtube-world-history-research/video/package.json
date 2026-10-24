@@ -1,0 +1,24 @@
+{
+  "name": "world-history-video",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Remotion video assembly for a faceless Japanese world-history YouTube channel",
+  "scripts": {
+    "studio": "remotion studio",
+    "fetch-font": "bash scripts/fetch_font.sh",
+    "placeholders": "python3 scripts/make_placeholders.py && remotion render PlaceholderClip public/episodes/sample/video/cut04.mp4 --crf=30",
+    "render:sample": "remotion render HistoryEpisode out/sample.mp4 --props=./episodes/sample/episode.json",
+    "captions": "node scripts/captions_from_whisper.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.532",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "remotion": "4.0.532"
+  },
+  "devDependencies": {
+    "@types/react": "18.3.31",
+    "typescript": "5.9.3"
+  }
+}
