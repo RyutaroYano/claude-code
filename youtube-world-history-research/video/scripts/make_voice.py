@@ -21,6 +21,8 @@ APIキーは、環境の Network secrets（ホスト generativelanguage.googleap
 決まり（設計書 第15章）:
   - モデル・声の名前・指示文は voices.json（声の台帳）のものを、一字一句そのまま使う。指示文は英語で、本文の前に置き、1行空けて本文。
   - 読み方の辞書（設計書 第15章）の言葉は、ひらがなに置き換えて渡す。
+  - ナレーションは、指示文で1分300字の速さを頼んだうえで、話している部分を測り、1分300字からずれていれば
+    声の高さを変えずに速さだけ合わせる（AIは字数を数えて読めないため。台本の字で数え、句読点は除く）。台詞は合わせない。
   - 「（ここで間をあける）」のところで区切り、pause_sec の無音を入れる。台詞は役ごとの声で別に作る。
 """
 from __future__ import annotations
@@ -45,6 +47,8 @@ RATE = 24000  # Gemini の音声は 24kHz・16bit・モノラル
 PAUSE_MARK = "（ここで間をあける）"
 MAX_RUN_CHARS = 700  # 1回で読ませる長さの上限（長すぎると途中で調子が崩れやすい）
 TRIAL_CHARS = 150    # 試し録り：約30秒（1分300字）
+TARGET_CPM = 300     # ナレーションの速さ：1分あたりの字数（句読点を除く、台本の字で数える）
+CPM_TOLERANCE = 0.03 # これより小さいずれは直さない
 
 
 def count(s: str) -> int:
@@ -188,6 +192,32 @@ def bursts(pcm: bytes) -> list[float]:
     return out
 
 
+def trim(pcm: bytes, thresh: int = 300) -> tuple[bytes, bytes, bytes]:
+    """前後の無音と、話している部分に分ける。"""
+    import array
+    x = array.array("h", pcm)
+    i, j = 0, len(x)
+    while i < j and abs(x[i]) < thresh:
+        i += 1
+    while j > i and abs(x[j - 1]) < thresh:
+        j -= 1
+    return pcm[:i * 2], pcm[i * 2:j * 2], pcm[j * 2:]
+
+
+def to_pace(pcm: bytes, chars: int) -> tuple[bytes, float]:
+    """話している部分が 1分あたり TARGET_CPM 字になるよう、声の高さを変えずに速さだけ変える（ffmpeg atempo）。"""
+    import subprocess
+    head, body, tail = trim(pcm)
+    speech = len(body) / 2 / RATE
+    factor = speech / (chars / TARGET_CPM * 60)
+    if abs(factor - 1) < CPM_TOLERANCE or not body:
+        return pcm, 1.0
+    out = subprocess.run(["ffmpeg", "-loglevel", "error", "-f", "s16le", "-ar", str(RATE), "-ac", "1", "-i", "-",
+                          "-filter:a", f"atempo={factor:.4f}", "-f", "s16le", "-ar", str(RATE), "-ac", "1", "-"],
+                         input=body, capture_output=True, check=True).stdout
+    return head[:int(RATE * 0.1) * 2] + out + tail[:int(RATE * 0.1) * 2], factor
+
+
 def silence(sec: float) -> bytes:
     return b"\x00\x00" * int(RATE * sec)
 
@@ -245,7 +275,7 @@ def main() -> None:
 
     only = {int(x) for x in a.only.split(",") if x}
     report = ["# 声の記録", "", f"- モデル：{model}", f"- ナレーター：{nar['voice']}", "",
-              "| ブロック | 区切り | カット | 声 | 字数 | 秒 | 1分の字数 |", "|---|---|---|---|---|---|---|"]
+              "| ブロック | 区切り | カット | 声 | 字数 | 秒 | 1分の字数 | 速さの調整 |", "|---|---|---|---|---|---|---|---|"]
     calls = 0
     for bi, segs in enumerate(blocks, 1):
         if only and bi not in only:
@@ -270,12 +300,14 @@ def main() -> None:
                 print(f"\n[ブロック{bi:02d}・区切り{n}・{voice}・{count(s['text'])}字・カット{label}]\n{prompt}")
                 continue
             p = make_part(parts_dir, f"block{bi:02d}_s{n:02d}", prompt, voice, model, key)
-            seg = read_pcm(p)
+            seg, factor = read_pcm(p), 1.0
+            if s["kind"] == "narration":
+                seg, factor = to_pace(seg, count(s["text"]))
             if pcm and not pcm.endswith(silence(ledger["pause_sec"])):
                 pcm += silence(ledger["gap_sec"])
             pcm += seg
             sec = len(seg) / 2 / RATE
-            report.append(f"| {bi:02d} | {n} | {label} | {voice} | {count(s['text'])} | {sec:.1f} | {count(s['text']) / sec * 60:.0f} |")
+            report.append(f"| {bi:02d} | {n} | {label} | {voice} | {count(s['text'])} | {sec:.1f} | {count(s['text']) / sec * 60:.0f} | ×{factor:.2f} |")
         if not a.dry_run:
             for t in bursts(pcm):
                 print(f"  注意：block{bi:02d} の {t:.2f}秒に、無音から急に大きな音（雑音の疑い）")

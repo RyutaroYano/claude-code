@@ -1,0 +1,256 @@
+{
+  "title": "ep001",
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "crossfadeSec": 0.5,
+  "cuts": [
+    {
+      "id": "cut001",
+      "durationSec": 9.8,
+      "image": "episodes/_common/missing.png",
+      "motion": "zoomIn",
+      "narration": "ヨーロッパの町といえば、石や煉瓦の建物。日本の家といえば、木。そんなイメージがあるかもしれません。",
+      "captions": [
+        {
+          "text": "ヨーロッパの町といえば、\n石や煉瓦の建物。",
+          "startSec": 0.3,
+          "endSec": 4.34
+        },
+        {
+          "text": "日本の家といえば、木。",
+          "startSec": 4.34,
+          "endSec": 7.16
+        },
+        {
+          "text": "そんなイメージが\nあるかもしれません。",
+          "startSec": 7.16,
+          "endSec": 9.7
+        }
+      ]
+    },
+    {
+      "id": "cut002a",
+      "durationSec": 5.3,
+      "image": "episodes/_common/missing.png",
+      "motion": "panLeft",
+      "narration": "ところが、17世紀のロンドンは、木の家が多い町でした。木の骨組みに漆喰を塗った家が、狭い通りにひしめいていたのです。",
+      "captions": [
+        {
+          "text": "ところが、17世紀のロンドンは、\n木の家が多い町でした。",
+          "startSec": 0.0,
+          "endSec": 5.2
+        }
+      ]
+    },
+    {
+      "id": "cut002b",
+      "durationSec": 5.78,
+      "image": "episodes/_common/missing.png",
+      "motion": "panLeft",
+      "narration": "ところが、17世紀のロンドンは、木の家が多い町でした。木の骨組みに漆喰を塗った家が、狭い通りにひしめいていたのです。",
+      "captions": [
+        {
+          "text": "木の骨組みに漆喰を塗った家が、\n狭い通りにひしめいていたのです。",
+          "startSec": 0.0,
+          "endSec": 5.68
+        }
+      ]
+    },
+    {
+      "id": "cut003",
+      "durationSec": 9.52,
+      "image": "episodes/_common/missing.png",
+      "motion": "zoomIn",
+      "narration": "1657年の冬。江戸で、町の大半を焼き尽くす大火事が起きました。「明暦の大火」です。",
+      "captions": [
+        {
+          "text": "1657年の冬。",
+          "startSec": 0.0,
+          "endSec": 3.1
+        },
+        {
+          "text": "江戸で、町の大半を\n焼き尽くす大火事が起きました。",
+          "startSec": 3.1,
+          "endSec": 8.2
+        },
+        {
+          "text": "「明暦の大火」です。",
+          "startSec": 8.2,
+          "endSec": 9.42
+        }
+      ]
+    },
+    {
+      "id": "cut004",
+      "durationSec": 7.64,
+      "image": "episodes/_common/missing.png",
+      "motion": "zoomIn",
+      "narration": "そのわずか9年後、ほぼ同じ時代に、今度はロンドンで大火事が起きました。「ロンドン大火」です。",
+      "captions": [
+        {
+          "text": "そのわずか9年後、\nほぼ同じ時代に、",
+          "startSec": 0.0,
+          "endSec": 3.54
+        },
+        {
+          "text": "今度はロンドンで\n大火事が起きました。",
+          "startSec": 3.54,
+          "endSec": 5.98
+        },
+        {
+          "text": "「ロンドン大火」です。",
+          "startSec": 5.98,
+          "endSec": 7.54
+        }
+      ]
+    },
+    {
+      "id": "cut005",
+      "durationSec": 4.54,
+      "image": "episodes/_common/missing.png",
+      "motion": "zoomIn",
+      "narration": "どちらも木の家が多い大きな町が、同じように燃えたのです。",
+      "captions": [
+        {
+          "text": "どちらも木の家が多い大きな町が、\n同じように燃えたのです。",
+          "startSec": 0.0,
+          "endSec": 4.44
+        }
+      ]
+    },
+    {
+      "id": "cut006",
+      "durationSec": 4.04,
+      "image": "episodes/_common/missing.png",
+      "motion": "zoomOut",
+      "narration": "ところが、2つの町の建て直し方は、正反対でした。",
+      "captions": [
+        {
+          "text": "ところが、2つの町の\n建て直し方は、正反対でした。",
+          "startSec": 0.0,
+          "endSec": 3.94
+        }
+      ]
+    },
+    {
+      "id": "cut007",
+      "durationSec": 5.68,
+      "image": "episodes/_common/missing.png",
+      "motion": "zoomIn",
+      "narration": "ロンドンは、煉瓦と石の町に。江戸は、また木の町に。",
+      "captions": [
+        {
+          "text": "ロンドンは、煉瓦と石の町に。",
+          "startSec": 0.0,
+          "endSec": 2.96
+        },
+        {
+          "text": "江戸は、また木の町に。",
+          "startSec": 2.96,
+          "endSec": 5.58
+        }
+      ]
+    },
+    {
+      "id": "cut008",
+      "durationSec": 3.74,
+      "image": "episodes/_common/missing.png",
+      "motion": "zoomOut",
+      "narration": "燃えた後、なんで石造りと木造りに分かれたのか。",
+      "captions": [
+        {
+          "text": "燃えた後、なんで石造りと\n木造りに分かれたのか。",
+          "startSec": 0.0,
+          "endSec": 3.64
+        }
+      ]
+    },
+    {
+      "id": "cut009",
+      "durationSec": 4.38,
+      "image": "episodes/_common/missing.png",
+      "motion": "zoomIn",
+      "narration": "その裏には、ロンドンと江戸、それぞれの事情がありました。",
+      "captions": [
+        {
+          "text": "その裏には、ロンドンと江戸、\nそれぞれの事情がありました。",
+          "startSec": 0.0,
+          "endSec": 4.28
+        }
+      ]
+    },
+    {
+      "id": "cut010",
+      "durationSec": 3.48,
+      "image": "episodes/_common/missing.png",
+      "motion": "none",
+      "narration": "それぞれの町で、手に入る材料の違い。",
+      "captions": [
+        {
+          "text": "それぞれの町で、\n手に入る材料の違い。",
+          "startSec": 0.0,
+          "endSec": 3.38
+        }
+      ]
+    },
+    {
+      "id": "cut011",
+      "durationSec": 4.52,
+      "image": "episodes/_common/missing.png",
+      "motion": "none",
+      "narration": "国王や幕府といった、町を治める人たちの考え方の違い。",
+      "captions": [
+        {
+          "text": "国王や幕府といった、\n町を治める人たちの考え方の違い。",
+          "startSec": 0.0,
+          "endSec": 4.42
+        }
+      ]
+    },
+    {
+      "id": "cut012",
+      "durationSec": 6.14,
+      "image": "episodes/_common/missing.png",
+      "motion": "none",
+      "narration": "そして、家を誰が持ち、誰が建て直すのかという、家の所有の仕方の違い。",
+      "captions": [
+        {
+          "text": "そして、家を誰が持ち、\n誰が建て直すのかという、",
+          "startSec": 0.0,
+          "endSec": 3.82
+        },
+        {
+          "text": "家の所有の仕方の違い。",
+          "startSec": 3.82,
+          "endSec": 6.04
+        }
+      ]
+    },
+    {
+      "id": "cut013",
+      "durationSec": 5.16,
+      "image": "episodes/_common/missing.png",
+      "motion": "zoomIn",
+      "narration": "この3つです。当時の記録をたどりながら、その理由を明らかにしていきます。",
+      "captions": [
+        {
+          "text": "この3つです。",
+          "startSec": 0.0,
+          "endSec": 1.62
+        },
+        {
+          "text": "当時の記録をたどりながら、\nその理由を明らかにしていきます。",
+          "startSec": 1.62,
+          "endSec": 5.06
+        }
+      ]
+    }
+  ],
+  "audio": [
+    {
+      "src": "episodes/ep001/audio/block01.wav",
+      "startSec": 0.3
+    }
+  ]
+}

@@ -78,7 +78,8 @@ def parse_cut_table(md_path: Path) -> list[dict]:
 
 def spoken(cut: dict) -> str:
     """そのカットで話される文。順番はナレーション → 台詞。"""
-    return cut["narration"] + cut["line"]
+    # 「（ここで間をあける）」のような、台本の中の指示は読まないし、テロップにも出さない
+    return re.sub(r"（[^）]*）", "", cut["narration"]) + cut["line"]
 
 
 # ---------- 時間情報を読む ----------
@@ -139,7 +140,7 @@ def chunks(text: str) -> list[str]:
     limit = MAX_PER_LINE * MAX_LINES
     out = []
     for sent in re.findall(r"[^。！？]+[。！？]?", text) or [text]:
-        if len(sent) <= limit:
+        if len(sent) <= limit and fits(sent):
             out.append(sent)
             continue
         buf = ""
@@ -150,7 +151,7 @@ def chunks(text: str) -> list[str]:
                     buf = ""
                 out.append(part[:limit])
                 part = part[limit:]
-            if len(buf + part) > limit and buf:
+            if buf and (len(buf + part) > limit or not fits(buf + part)):
                 out.append(buf)
                 buf = ""
             buf += part
@@ -159,12 +160,22 @@ def chunks(text: str) -> list[str]:
     return out
 
 
+def break_points(s: str) -> list[int]:
+    """2行に分けられる位置（読点や助詞の後で、どちらの行も1行の字数に収まる所）。"""
+    cands = [i + 1 for i, ch in enumerate(s[:-1]) if ch in "、をにがはでとへもの" and s[i + 1] not in "、。"]
+    return [i for i in cands if len(s[:i]) <= MAX_PER_LINE and len(s[i:]) <= MAX_PER_LINE]
+
+
+def fits(s: str) -> bool:
+    return len(s) <= MAX_PER_LINE or bool(break_points(s))
+
+
 def two_lines(s: str) -> str:
     if len(s) <= MAX_PER_LINE:
         return s
     mid = len(s) / 2
-    cands = [i + 1 for i, ch in enumerate(s[:-1]) if ch in "、をにがはでとへもの" and 0 < i + 1 < len(s)]
-    cands = [i for i in cands if len(s[:i]) <= MAX_PER_LINE and len(s[i:]) <= MAX_PER_LINE] or [min(MAX_PER_LINE, len(s) - 1)]
+    cands = break_points(s) or [min(MAX_PER_LINE, len(s) - 1)]
+    cands = [i for i in cands if s[i - 1] == "、"] or cands  # 読点で切れるなら、読点を優先する
     cut = min(cands, key=lambda i: abs(i - mid))
     return s[:cut] + "\n" + s[cut:]
 
