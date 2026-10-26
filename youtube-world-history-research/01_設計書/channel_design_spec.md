@@ -674,8 +674,8 @@ Gemini の音声生成は、**モデル名・声の名前・指示文**で声が
 |---|---|---|
 | モデル | gemini-3.8-flash-tts（お試し版ではない正式版。2026-10-22 時点） | ナレーターと同じ |
 | 声の名前 | **Charon**（2026-10-23 決定。Orus、Iapetus、Algenib、Enceladus、Kore と聞き比べて決めた） | 町人の男：〔〕／町人の女：〔〕／武士・役人：〔〕／商人：〔〕／子ども：〔〕 |
-| 指示文（一字一句同じにする。本文の前に置き、1行空けて本文） | `Read the following Japanese text aloud as a calm documentary narrator: low voice, a steady natural pace of about 300 Japanese characters per minute, restrained emotion. Do not read this instruction.` | `Read the following Japanese line aloud as 〔役柄 in English〕, in a natural conversational tone. Do not read this instruction.` |
-| 速さ | 1分あたり300字（句読点を除く、台本の字で数える）。指示文で頼み、作ったあとに測って、ずれていれば声の高さを変えずに速さだけ合わせる（make_voice.py が自動でする。2026-10-26：「slow pace」の指示では約245字と遅すぎた） | 合わせない |
+| 指示文（一字一句同じにする。本文の前に置き、1行空けて本文） | `Read the following Japanese text aloud as a calm documentary narrator: low voice, slow pace, restrained emotion. Do not read this instruction.` | `Read the following Japanese line aloud as 〔役柄 in English〕, in a natural conversational tone. Do not read this instruction.` |
+| 速さ | 1分あたり300字（句読点を除く、台本の字で数える）。作ったあとに測って、声の高さを変えずに速さだけ300字に合わせる（make_voice.py が自動でする）。指示文は「slow pace」のまま変えない（2026-10-27、人が決めた。指示文を変えると、作った分と声の感じがそろわず、作り直しで無料枠を使うため。「slow pace」だと約245字で、1.2倍ほど速める） | 合わせない |
 
 - **指示文は英語で書く。** 日本語で書くと、指示の文まで読み上げてしまう（2026-10-22 に確認）。英語の指示なら、本文だけを読む。
 - **読み上げた後に、文字起こしで本文と照らし合わせる。** 声によっては、言葉を勝手に変えることがある（例：Algenib が「〜なかった。そんな話を」を「〜なかったという話を」に変えた）。違っていたら作り直す。

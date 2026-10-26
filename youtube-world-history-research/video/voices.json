@@ -3,7 +3,7 @@
   "model": "gemini-3.8-flash-tts",
   "narrator": {
     "voice": "Charon",
-    "instruction": "Read the following Japanese text aloud as a calm documentary narrator: low voice, a steady natural pace of about 300 Japanese characters per minute, restrained emotion. Do not read this instruction."
+    "instruction": "Read the following Japanese text aloud as a calm documentary narrator: low voice, slow pace, restrained emotion. Do not read this instruction."
   },
   "line_instruction": "Read the following Japanese line aloud as {role}, in a natural conversational tone. Do not read this instruction.",
   "roles": {
