@@ -175,6 +175,19 @@ def read_pcm(path: Path) -> bytes:
         return w.readframes(w.getnframes())
 
 
+def bursts(pcm: bytes) -> list[float]:
+    """無音の直後に、いきなり大きな音が来る所（ヘッダーやデータの混入による雑音）を探す。"""
+    import array
+    x = array.array("h", pcm)
+    win, out, prev = RATE // 100, [], 0.0
+    for i in range(0, len(x) - win, win):
+        rms = (sum(v * v for v in x[i:i + win]) / win) ** 0.5 / 32768
+        if rms > 0.3 and prev < 0.01:
+            out.append(i / RATE)
+        prev = rms
+    return out
+
+
 def silence(sec: float) -> bytes:
     return b"\x00\x00" * int(RATE * sec)
 
@@ -184,7 +197,14 @@ def make_part(parts_dir: Path, name: str, prompt: str, voice: str, model: str, k
     path = parts_dir / f"{name}_{voice}_{h}.wav"
     if not path.exists():
         print(f"  作成中：{path.name}", flush=True)
-        write_wav(path, tts(prompt, voice, model, key))
+        audio = tts(prompt, voice, model, key)
+        if audio[:4] == b"RIFF":
+            # 2026-10 から、WAVファイル（頭にヘッダー、後ろにAI生成の来歴情報）で返ってくる。
+            # そのまま保存し、音は read_pcm で data の部分だけを読む（ヘッダーや来歴情報を音として鳴らさない）
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(audio)
+        else:
+            write_wav(path, audio)  # 以前の形：生のPCM
     return path
 
 
@@ -257,6 +277,8 @@ def main() -> None:
             sec = len(seg) / 2 / RATE
             report.append(f"| {bi:02d} | {n} | {label} | {voice} | {count(s['text'])} | {sec:.1f} | {count(s['text']) / sec * 60:.0f} |")
         if not a.dry_run:
+            for t in bursts(pcm):
+                print(f"  注意：block{bi:02d} の {t:.2f}秒に、無音から急に大きな音（雑音の疑い）")
             write_wav(out_dir / f"block{bi:02d}.wav", pcm)
             print(f"block{bi:02d}.wav  {len(pcm) / 2 / RATE / 60:.1f}分")
     if a.dry_run:
