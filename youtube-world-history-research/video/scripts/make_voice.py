@@ -9,6 +9,7 @@
   --only     作るブロックの番号（カンマ区切り）
   --trial    声の試し録り。ブロック01の最初の約30秒分だけを、--voices の声で1回ずつ作る
   --voices   --trial で比べる声（カンマ区切り。既定は台帳の声）
+  --narration-only  台詞を飛ばして、ナレーションだけで作る（台詞はあとで差し込む）
 
 APIキーは、環境の Network secrets（ホスト generativelanguage.googleapis.com、ヘッダー X-Goog-Api-Key）に登録してあれば、
 つなぐときに自動で付く（このスクリプトもClaudeも、キーの中身は見ない）。手元のPCで流すときだけ、環境変数 GEMINI_API_KEY に入れる。
@@ -246,6 +247,7 @@ def main() -> None:
     ap.add_argument("--only", default="")
     ap.add_argument("--trial", action="store_true")
     ap.add_argument("--voices", default="")
+    ap.add_argument("--narration-only", action="store_true")  # 台詞を飛ばし、ナレーションだけ作る（台詞の所は gap_sec の間だけ）
     a = ap.parse_args()
 
     ledger = json.loads((ROOT / "voices.json").read_text(encoding="utf-8"))
@@ -286,6 +288,9 @@ def main() -> None:
                 pcm += silence(ledger["pause_sec"])
                 continue
             n += 1
+            if a.narration_only and s["kind"] == "line":
+                report.append(f"| {bi:02d} | {n} | {s['cuts'][0]} | （台詞・あとで） | {count(s['text'])} | — | — | — |")
+                continue
             if s["kind"] == "narration":
                 voice, instr = nar["voice"], nar["instruction"]
             else:
