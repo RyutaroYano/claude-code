@@ -304,7 +304,17 @@ def main() -> None:
                 calls += 1
                 print(f"\n[ブロック{bi:02d}・区切り{n}・{voice}・{count(s['text'])}字・カット{label}]\n{prompt}")
                 continue
-            p = make_part(parts_dir, f"block{bi:02d}_s{n:02d}", prompt, voice, model, key)
+            p = None
+            if s["kind"] == "narration":
+                # 前の指示文で作り済みの区切りがあれば、それを使う（作り直しで無料枠を使わない）
+                for old in nar.get("previous_instructions", []):
+                    oldp = old + "\n\n" + apply_readings(s["text"], readings)
+                    h = hashlib.sha1(f"{model}\n{voice}\n{oldp}".encode()).hexdigest()[:10]
+                    cand = parts_dir / f"block{bi:02d}_s{n:02d}_{voice}_{h}.wav"
+                    if cand.exists():
+                        p = cand
+                        break
+            p = p or make_part(parts_dir, f"block{bi:02d}_s{n:02d}", prompt, voice, model, key)
             seg, factor = read_pcm(p), 1.0
             if s["kind"] == "narration":
                 seg, factor = to_pace(seg, count(s["text"]))
