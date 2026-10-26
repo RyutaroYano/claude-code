@@ -103,10 +103,10 @@ npm run studio             # ブラウザでプレビュー・微調整
    - 音声はミュートして使う（ナレーションだけ聞かせる）。
    - クリップがカットより短いと最後のフレームで止まる。durationSec をクリップ長以下にするか、長めに生成。
 4. ナレーション（Gemini TTS）
-   - `scripts/make_voice.py` で作る。APIキーは環境変数 `GEMINI_API_KEY` から読む。声の設定は `voices.json`（声の台帳）。
+   - `scripts/make_voice.py` で作る。APIキーは環境の Network secrets（ホスト `generativelanguage.googleapis.com`、ヘッダー `X-Goog-Api-Key`）に登録してあれば自動で付く（2026-10-21 登録済み）。手元のPCで流すときだけ環境変数 `GEMINI_API_KEY` に入れる。声の設定は `voices.json`（声の台帳）。
      ```bash
      python3 scripts/make_voice.py ep001 ../05_各回/第01回_大火/0[4-9]_ブロック*.md --dry-run   # 読ませる文と回数だけ確かめる
-     python3 scripts/make_voice.py ep001 ../05_各回/第01回_大火/0[4-9]_ブロック*.md --trial --voices Charon,Orus,Iapetus   # 声の試し録り（約30秒）
+     python3 scripts/make_voice.py ep001 ../05_各回/第01回_大火/0[4-9]_ブロック*.md --trial --voices Puck,Fenrir   # 登場人物の声などの試し録り（約30秒）
      python3 scripts/make_voice.py ep001 ../05_各回/第01回_大火/0[4-9]_ブロック*.md   # 全ブロック → audio/block01.wav …
      ```
    - 読み方の辞書（設計書 第15章）の言葉はひらがなに置き換え、「（ここで間をあける）」には1秒の無音を入れる。台詞は役ごとの声で別に作ってつなぐ。

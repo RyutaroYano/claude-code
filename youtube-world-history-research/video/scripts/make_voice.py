@@ -10,7 +10,8 @@
   --trial    声の試し録り。ブロック01の最初の約30秒分だけを、--voices の声で1回ずつ作る
   --voices   --trial で比べる声（カンマ区切り。既定は台帳の声）
 
-APIキーは環境変数 GEMINI_API_KEY から読む。
+APIキーは、環境の Network secrets（ホスト generativelanguage.googleapis.com、ヘッダー X-Goog-Api-Key）に登録してあれば、
+つなぐときに自動で付く（このスクリプトもClaudeも、キーの中身は見ない）。手元のPCで流すときだけ、環境変数 GEMINI_API_KEY に入れる。
 
 出力（public/episodes/<回のID>/ の下）:
   audio/block01.wav …   ブロックごとの音声（build_episode.py が読む）
@@ -134,8 +135,10 @@ def tts(text: str, voice: str, model: str, key: str) -> bytes:
             "speechConfig": {"voiceConfig": {"prebuiltVoiceConfig": {"voiceName": voice}}},
         },
     }
-    req = urllib.request.Request(API.format(model=model), data=json.dumps(body).encode(),
-                                 headers={"Content-Type": "application/json", "x-goog-api-key": key})
+    headers = {"Content-Type": "application/json"}
+    if key:
+        headers["x-goog-api-key"] = key
+    req = urllib.request.Request(API.format(model=model), data=json.dumps(body).encode(), headers=headers)
     for attempt in range(4):
         try:
             with urllib.request.urlopen(req, timeout=600) as r:
@@ -180,8 +183,6 @@ def make_part(parts_dir: Path, name: str, prompt: str, voice: str, model: str, k
     h = hashlib.sha1(f"{model}\n{voice}\n{prompt}".encode()).hexdigest()[:10]
     path = parts_dir / f"{name}_{voice}_{h}.wav"
     if not path.exists():
-        if key is None:
-            sys.exit("環境変数 GEMINI_API_KEY がありません。")
         print(f"  作成中：{path.name}", flush=True)
         write_wav(path, tts(prompt, voice, model, key))
     return path
@@ -201,8 +202,6 @@ def main() -> None:
     model, nar = ledger["model"], ledger["narrator"]
     readings = load_readings()
     key = os.environ.get("GEMINI_API_KEY")
-    if not a.dry_run and not key:
-        sys.exit("環境変数 GEMINI_API_KEY がありません。環境の設定で登録してから、新しいセッションで流してください。")
 
     out_dir = ROOT / "public" / "episodes" / a.episode / "audio"
     parts_dir = out_dir / "parts"
