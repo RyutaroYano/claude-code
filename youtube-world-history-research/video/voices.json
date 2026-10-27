@@ -1,0 +1,51 @@
+{
+  "_説明": "声の台帳（設計書 第15章）。ナレーターは Charon で決定（2026-10-23）。モデル・声の名前・指示文は変えない。登場人物の「仮」は、まだ決めていない値。",
+  "model": "gemini-3.8-flash-tts",
+  "narrator": {
+    "voice": "Charon",
+    "instruction": "Read the following Japanese text aloud as a calm documentary narrator: low voice, a steady natural pace of about 300 Japanese characters per minute, restrained emotion. Do not read this instruction.",
+    "previous_instructions": [
+      "Read the following Japanese text aloud as a calm documentary narrator: low voice, slow pace, restrained emotion. Do not read this instruction."
+    ]
+  },
+  "line_instruction": "Read the following Japanese line aloud as {role}, in a natural conversational tone. Do not read this instruction.",
+  "roles": {
+    "国王": {
+      "voice": "Alnilam",
+      "role_en": "a 17th-century English king giving an order",
+      "_状態": "仮"
+    },
+    "ロンドン市長": {
+      "voice": "Iapetus",
+      "role_en": "a hesitant 17th-century London mayor",
+      "_状態": "仮"
+    },
+    "商家の主人": {
+      "voice": "Algenib",
+      "role_en": "an Edo-period Japanese merchant in a hurry",
+      "_状態": "仮"
+    },
+    "借りている男": {
+      "voice": "Fenrir",
+      "role_en": "an angry 17th-century London tenant",
+      "_状態": "仮"
+    },
+    "大岡忠相": {
+      "voice": "Orus",
+      "role_en": "an Edo-period Japanese magistrate speaking formally",
+      "_状態": "仮"
+    },
+    "町奉行": {
+      "voice": "Orus",
+      "role_en": "an Edo-period Japanese magistrate speaking formally",
+      "_状態": "仮"
+    },
+    "町の男": {
+      "voice": "Puck",
+      "role_en": "a Tokyo townsman of the Meiji era grumbling casually",
+      "_状態": "仮"
+    }
+  },
+  "pause_sec": 1.0,
+  "gap_sec": 0.4
+}
