@@ -2,4 +2,3 @@ node_modules/
 out/
 .remotion/
 public/fonts/
-public/episodes/*/audio/parts/

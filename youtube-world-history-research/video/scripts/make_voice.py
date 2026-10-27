@@ -16,7 +16,7 @@ APIキーは、環境の Network secrets（ホスト generativelanguage.googleap
 
 出力（public/episodes/<回のID>/ の下）:
   audio/block01.wav …   ブロックごとの音声（build_episode.py が読む）
-  audio/parts/…         区切りごとの音声。同じ設定・同じ文なら作り直さない（無料枠の回数を節約するため）
+  audio/parts/…         区切りごとの音声。同じ設定・同じ文なら作り直さない（無料枠の回数を節約するため）。gitに入れて、別のセッションでも使えるようにする
   audio/voice_report.md 区切りごとの文、声、長さ、1分あたりの字数
 
 決まり（設計書 第15章）:
